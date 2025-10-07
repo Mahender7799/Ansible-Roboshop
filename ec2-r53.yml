@@ -25,9 +25,9 @@
   #    msg : "Instance outpur: {{ ec2_output }}"  
 
 
-  - name: print public_ip
-    ansible.builtin.debug: 
-       msg: "Instance {{ item.item }} public IP: {{ item.instances[0].public_ip_address }}"
+  - name: Print public IP of each instance
+    ansible.builtin.debug:
+     msg: "Instance {{ item.item }} public IP: {{ item.instances[0].public_ip_address }}"
     loop: "{{ ec2_output.results }}"
 
   # - name: print public ip
