@@ -5,7 +5,7 @@
     ami_id: ami-09c813fb71547fc4f
     sg_id: sg-08bd67a1891eddf3d # replace with your ID
     zone_id: "Z02480542REU80RRGG46D" # replace with your ID
-    demain_name: mahender.fun
+    domain_name: mahender.fun
     instances: #item (list)
      - mongodb
   tasks:
