@@ -20,15 +20,15 @@
     loop: "{{ instances }}"
     register: ec2_output # register key word to take above instance output and store
 
-  # - name: print the ec2 instance
-  #   ansible.builtin.debug:
-  #    msg : "Instance outpur: {{ ec2_output }}"  
-
-
-  - name: Print public IP of each instance
+  - name: print the ec2 instance
     ansible.builtin.debug:
-     msg: "Instance {{ item.item }} public IP: {{ item.instances[0].public_ip_address }}"
-    loop: "{{ ec2_output.results }}"
+     msg : "Instance outpur: {{ ec2_output }}"  
+
+
+  # - name: Print public IP of each instance
+  #   ansible.builtin.debug:
+  #    msg: "Instance {{ item.item }} public IP: {{ item.instances[0].public_ip_address }}"
+  #   loop: "{{ ec2_output.results }}"
 
   # - name: print public ip
   #   ansible.builtin.debug: 
