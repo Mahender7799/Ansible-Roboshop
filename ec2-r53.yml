@@ -11,32 +11,36 @@
   tasks:
   - name: create ec2 instance
     amazon.aws.ec2_instance:
-      name: "{{ item }}" # mongo db will comehere(list)
+      name: "{{ item }}"
       instance_type: t3.micro
       security_group: "{{ sg_id }}"
       image_id: "{{ ami_id }}"
       tags:
-       name: "{{ item }}"
+        Name: "{{ item }}"
     loop: "{{ instances }}"
-    register: ec2_output # register key word to take above instance output and store
+    register: ec2_output
 
-  - name: print the ec2 instance
+  - name: print the ec2_output
     ansible.builtin.debug:
-     msg : "Instance outpur: {{ ec2_output }}"  
+      msg: "{{ ec2_output }}"
 
-
-  - name: Print public IP of each instance
-    ansible.builtin.debug:
-      msg: "Instance {{ item.item }} public IP: {{ item.instances[0].network_interfaces[0].association.public_ip }}"
+  - name: print public_ip
+    ansible.builtin.debug: 
+      msg: "{{ item.instances[0].public_ip_address }}"
     loop: "{{ ec2_output.results }}"
 
+  - name: print private_ip
+    ansible.builtin.debug: 
+      msg: "{{ item.instances[0].private_ip_address }}"
+    loop: "{{ ec2_output.results }}"
 
-  # - name: print public ip
-  #   ansible.builtin.debug: 
-  #    msg : "{{ item.instances[0].public_ip_address }}"
-  #   loop: "{{ ec2_output.results }}"
-
-  # - name: print private ip
-  #   ansible.builtin.debug: 
-  #    msg: "{{ item.instances[0].private_ip_address }}"
+  # - name: create route53 record
+  #   amazon.aws.route53:
+  #     state: present
+  #     zone: "{{ domain_name }}"
+  #     record: "{{ item.item }}.{{ domain_name }}" # mongodb.daws86s.fun
+  #     type: A
+  #     ttl: 1
+  #     value: "{{ item.instances[0].private_ip_address }}"
+  #     overwrite: true
   #   loop: "{{ ec2_output.results }}"
