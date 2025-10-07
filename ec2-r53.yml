@@ -16,7 +16,7 @@
       security_greoup: "{{ sg_id }}"
       image_id: "{{ ami_id }}"
       tags:
-      - name: "{{ item }}"
+       name: "{{ item }}"
     loop: "{{ instance }}"
     register: ec2_output # register key word to take above instance output and store
 
