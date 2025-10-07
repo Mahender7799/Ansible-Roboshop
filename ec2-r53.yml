@@ -6,7 +6,7 @@
     sg_id: sg-08bd67a1891eddf3d # replace with your ID
     zone_id: Z02480542REU80RRGG46D # replace with your ID
     demain_name: mahender.fun
-    instances: #item
+    instances: #item (list)
     - mongodb
   tasks:
   - name: create ec2 instance
@@ -20,8 +20,18 @@
     loop: "{{ instances }}"
     register: ec2_output # register key word to take above instance output and store
 
-  - name: print the ec2 instance
-    ansible.builtin.debug:
-     msg : "Instance outpur: {{ ec2_output }}"  
+  # - name: print the ec2 instance
+  #   ansible.builtin.debug:
+  #    msg : "Instance outpur: {{ ec2_output }}"  
 
 
+- name: print private_ip
+  ansible.builtin.debug: 
+   msg : "{{ item.instances[0].private_ip_address }}"
+  loop: "{{ ec2_output.results }}"
+
+
+- name: print public_ip
+  ansible.builtin.debug: 
+   msg: "{{ item.instances[0].public_ip_address }}"
+  loop: "{{ ec2_output.results }}"
