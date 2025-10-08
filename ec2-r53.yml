@@ -8,9 +8,9 @@
     domain_name: mahender.fun
     instances: #item (list)
      - mongodb
-     - redisdb
-     - mysql
-     - rabbitmq
+    #  - redisdb
+    #  - mysql
+    #  - rabbitmq
   tasks:
   - name: create ec2 instance
     amazon.aws.ec2_instance:
