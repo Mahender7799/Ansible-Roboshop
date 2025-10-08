@@ -66,9 +66,18 @@
       name: mongodb-mongosh
       state: present
 
-  - name: connnect to mongodb catalogue
-    ansible.builtin.command: mongosh mongodb.mahender.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"
+  # - name: connnect to mongodb catalogue
+  #   ansible.builtin.command: mongosh mongodb.mahender.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"
+  #   register: catalogue_output
+
+  - name: Check if 'catalogue' DB exists in MongoDB
+    ansible.builtin.command: >
+     mongosh mongodb.mahender.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"
     register: catalogue_output
+    failed_when: catalogue_output.rc != 0 and "ENOTFOUND" not in catalogue_output.stderr
+
+  - debug:
+      var: catalogue_output
 
   # - name: evaluate cataalogue database
   #   community.mongodb.mongodb_shell:
