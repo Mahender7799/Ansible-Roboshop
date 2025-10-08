@@ -8,6 +8,7 @@
     domain_name: mahender.fun
     instances: #item (list)
      - mongodb
+     - redisdb
   tasks:
   - name: create ec2 instance
     amazon.aws.ec2_instance:
