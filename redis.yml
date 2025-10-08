@@ -2,32 +2,31 @@
   hosts: redis
   become: yes
   tasks:
-   - name: disbale default redis server
-     ansible.builtin.command: dnf module disbale redis -y 
-  
+  - name: disable default redis
+    ansible.builtin.command: dnf module disable redis -y
 
-- name: enable redis7
-  ansible.builtin.command: dnf module enable redis:7 -y
+  - name: enable redis 7
+    ansible.builtin.command: dnf module enable redis:7 -y  
 
-- name: install redis server
-  ansible.builtin.package:
-   name: redis
-   state: present
+  - name: install redis server
+    ansible.builtin.package:
+      name: redis
+      state: present
 
-- name: allow remote connections 
-  ansible.builtin.replace:
-   path: /etc/redis/redis.conf
-   regexp: '127.0.0.1'
-   replace: '0.0.0.0' 
+  - name: allow remote connections 
+    ansible.builtin.replace:
+      path: /etc/redis/redis.conf
+      regexp: '127.0.0.1'
+      replace: '0.0.0.0' 
 
-- name: disable protected mode 
-  ansible.builtin.lineinfile:
-   path: /etc/redis/redis.conf
-   regexp: 'protected-mode'
-   line: 'protected-mode on'    
+  - name: disable protected mode 
+    ansible.builtin.lineinfile:
+      path: /etc/redis/redis.conf
+      regexp: 'protected-mode'
+      line: 'protected-mode on'    
 
-- name: start and enable redisdb
-  ansible.builtin.service:
-   name: redis
-   enabled: yes
-   state: started   
+  - name: start and enable redisdb
+    ansible.builtin.service:
+      name: redis
+      enabled: yes
+      state: started   
