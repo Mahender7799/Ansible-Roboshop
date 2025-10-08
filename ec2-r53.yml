@@ -6,11 +6,19 @@
     sg_id: sg-08bd67a1891eddf3d # replace with your ID
     zone_id: "Z02480542REU80RRGG46D" # replace with your ID
     domain_name: mahender.fun
-    instances: #item (list)
+    #instances: #item (list)
+    ###### we can pass instances through command line using -e
     #  - mongodb
     #  - redis
-    # - mysql
-      - rabbitmq
+    #  - mysql
+    #  - rabbitmq
+    #  - catalogue
+    #  - cart
+    #  - shipping
+    #  - user
+    #  - nginx
+    #  - payment
+    #  - frontend
   tasks:
   - name: create ec2 instance
     amazon.aws.ec2_instance:
