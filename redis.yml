@@ -3,30 +3,30 @@
   become: yes
   tasks:
   - name: disable default redis
-    ansible.builtin.command: dnf module disable redis -y
+    ansible.builtin.command: dnf module disable redis -y # if no predefined modules are available we can use command module
 
   - name: enable redis 7
     ansible.builtin.command: dnf module enable redis:7 -y
 
   - name: install redis
-    ansible.builtin.package:
+    ansible.builtin.package: # module to install package
       name: redis
       state: present
   
   - name: allow remote connections
-    ansible.builtin.replace:
+    ansible.builtin.replace: #module to replace word
       path: /etc/redis/redis.conf
       regexp: '127.0.0.1'
       replace: '0.0.0.0'
 
   - name: disable proctected mode
-    ansible.builtin.lineinfile:
+    ansible.builtin.lineinfile: # module to replace line in a file
       path: /etc/redis/redis.conf
       regexp: 'protected-mode'
       line: 'protected-mode no'
 
   - name: start and enable redis
-    ansible.builtin.service:
+    ansible.builtin.service: #module to enable and restart the service
       name: redis
       enabled: yes
       state: started
