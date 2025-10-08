@@ -8,7 +8,7 @@
     domain_name: mahender.fun
     instances: #item (list)
      - mongodb
-     - redisdb
+     - redis
     #  - mysql
     #  - rabbitmq
   tasks:
